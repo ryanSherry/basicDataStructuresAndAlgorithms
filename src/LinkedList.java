@@ -65,6 +65,20 @@ public class LinkedList {
          }
     }
 
+    public void addAtNode(int targetValue, int newValue) {
+        Node n = head;
+        Node nodeToAdd = new Node(newValue);
+        while (n.item != targetValue) {
+
+            if (n.next.item == targetValue) {
+                nodeToAdd.next = n.next.next;
+                n.next = nodeToAdd;
+                break;
+            }
+            n = n.next;
+        }
+    }
+
         public static void main(String[] args) {
 
             //start with empty list
@@ -99,6 +113,9 @@ public class LinkedList {
 
             linkedList.removeFromEnd();
 
+            //add node at value
+
+            linkedList.addAtNode(3, 99);
 
             //traverse list
 
