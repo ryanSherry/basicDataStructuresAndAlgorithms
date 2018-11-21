@@ -79,6 +79,51 @@ public class LinkedList {
         }
     }
 
+    void addAtIndex(int indexTarget, int value) {
+
+        Node n = head;
+        Node nodeToInsert = new Node(value);
+        int length = listLength();
+
+        if (indexTarget >= length || indexTarget < 0) {
+            throw new IndexOutOfBoundsException("Index outside of the bounds of the linked list");
+        }
+
+        if (indexTarget == 0) {
+            addToBeginning(value);
+        }
+
+        if (indexTarget == listLength() - 1) {
+            addToEnd(value);
+        }
+
+        for (int i = 0; i <= indexTarget; i++) {
+
+            // subtracting 1 from index to get the node before the target
+            if (i == indexTarget - 1) {
+                nodeToInsert.next = n.next;
+                n.next = nodeToInsert;
+                break;
+            }
+
+            if(n.next != null) {
+                n = n.next;
+            }
+        }
+    }
+
+    int listLength() {
+        Node n = head;
+        int i = 0;
+
+        while (n != null) {
+            n = n.next;
+            i++;
+        }
+
+        return i + 1;
+    }
+
         public static void main(String[] args) {
 
             //start with empty list
@@ -116,6 +161,10 @@ public class LinkedList {
             //add node at value
 
             linkedList.addAtNode(3, 99);
+
+            //add node at index
+
+            linkedList.addAtIndex(2, 88);
 
             //traverse list
 
