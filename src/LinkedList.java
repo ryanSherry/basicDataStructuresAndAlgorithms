@@ -31,7 +31,7 @@ public class LinkedList {
 
     //inserts new node at beginning of list
 
-    public void addToBeginning(int value) {
+    public void appendNodeBeginning(int value) {
 
         //create new node
         Node new_node = new Node(value);
@@ -41,11 +41,11 @@ public class LinkedList {
         head = new_node;
     }
 
-    public void removeFromBeginning() {
+    public void removeNodeBeginning() {
         head = head.next;
     }
 
-    public void append(int value) {
+    public void appendNodeEnd(int value) {
         //1. Create new node with data
 
         Node newTail = new Node(value);
@@ -69,7 +69,7 @@ public class LinkedList {
         return;
     }
 
-    public void deleteNode(int key) {
+    public void removeNodeAtKey(int key) {
         //1. Store head node
         Node temp = head, prev = null;
 
@@ -94,7 +94,7 @@ public class LinkedList {
         prev.next = temp.next;
     }
 
-    public void removeFromEnd() {
+    public void removeNodeEnd() {
         Node n = head;
         Node secondToLast;
 
@@ -121,7 +121,7 @@ public class LinkedList {
 //        }
 //    }
 
-    void insertAfter(Node target_node, int newData) {
+    void insertNodeAfter(Node target_node, int newData) {
 
         //1. Check if target node is null
         if (target_node == null) {
@@ -171,31 +171,31 @@ public class LinkedList {
 
             // add to beginning of list
 
-            linkedList.addToBeginning(0);
+            linkedList.appendNodeBeginning(0);
 
-            linkedList.addToBeginning(99);
+            linkedList.appendNodeBeginning(99);
 
             // remove from beginning of list
 
-            linkedList.removeFromBeginning();
+            linkedList.removeNodeBeginning();
 
             //add to end of list
 
-            linkedList.append(4);
+            linkedList.appendNodeEnd(4);
 
-            linkedList.append(5);
+            linkedList.appendNodeEnd(5);
 
             //remove from end of list
 
-            linkedList.removeFromEnd();
+            linkedList.removeNodeEnd();
 
             //add node at value
 
-            linkedList.insertAfter(second, 99);
+            linkedList.insertNodeAfter(second, 99);
 
             //add node at index
 
-            linkedList.insertAfter(third, 88);
+            linkedList.insertNodeAfter(third, 88);
 
             //traverse list
 
