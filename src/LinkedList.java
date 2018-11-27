@@ -3,221 +3,155 @@ public class LinkedList {
     //head of list
     Node head;
 
-    //inner class made static so main can access it.
+    //Node innerclass
     static class Node {
         int item;
         Node next;
-        Node previous;
 
-        // inner class constructor
+        //Node constructor
         Node(int item) {
             this.item = item;
             this.next = null;
-            this.previous = null;
-        }
-
-    }
-
-    // function to print contents of linkedList
-
-    public void printLinkedList() {
-
-        // Get reference to head of list
-        Node n = head;
-
-        while (n != null) {
-            System.out.print(n.item + " ");
-            n = n.next;
         }
     }
 
-    //inserts new node at beginning of list
-
-    public void appendNodeBeginning(int value) {
-
-        //1. create new node
-        Node new_node = new Node(value);
-        //2. set new node's reference to current head and previous as null
-        new_node.next = head;
-        new_node.previous = null;
-        //3. change previous of head node to the new node
-        if (head != null) head.previous = new_node;
-        //4. set new node as the new head reference
-        head = new_node;
+    //Print list
+    void printList(){
+        Node node = head;
+        while(node != null) {
+            System.out.println(node.item + " ");
+            node = node.next;
+        }
     }
 
-    public void removeNodeBeginning() {
+    //Insert Node as head
+    void insertNodeFirst(int value) {
+        Node newHead = new Node(value);
+        newHead.next = head;
+        head = newHead;
+    }
+
+    //Remove current head
+    void removeNodeFirst() {
+
+        if (head == null) {
+            System.out.println("No Node to remove");
+            return;
+        }
+
         head = head.next;
     }
 
-    public void appendNodeEnd(int value) {
-        //1. Create new node with data
-
-        Node newTail = new Node(value);
-
-        //2. If list is empty, make new node the head
-
+    //Insert Node as tail
+    void insertNodeLast(int value) {
         if (head == null) {
-            newTail.previous = null;
             head = new Node(value);
             return;
         }
 
-        //3. Otherwise, traverse list till last node
+        Node node = head;
 
-        Node last = head;
-
-        while (last.next != null) {
-            last = last.next;
+        while(node.next != null) {
+            node = node.next;
         }
 
-        //4. Change the next of last current node to the new node
-        last.next = newTail;
-        //5. Make the current node the previous of the new node
-        newTail.previous = last;
-        return;
+        node.next = new Node(value);
     }
 
-    public void removeNodeAtKey(int key) {
-        //1. Store head node
-        Node temp = head, prev = null;
-
-        //2. If head has Node with matching key, then we make the next node the new head
-        if(temp != null && temp.item == key) {
-            head = temp.next;
+    //Remove current tail
+    void removeNodeLast() {
+        if (head.next == null) {
+            head = null;
             return;
         }
 
-        //3. Search for Node with key to be deleted. We need to keep track of the previous node
-        while (temp != null && temp.item != key) {
-            prev = temp;
-            temp = temp.next;
+        Node node = head;
+
+        while (node.next != null) {
+            if (node.next.next == null) {
+                node.next = null;
+                break;
+            }
+
+            node = node.next;
         }
 
-        //4. If key is not present in list, return
-        if (temp == null) {
+    }
+
+    void insertNodeBefore(Node target, int value) {
+        if (target == null) {
+            System.out.println("target node is null");
             return;
         }
 
-        //5. Unlink the node from the Linked List
-        prev.next = temp.next;
+        Node nodeToInsert = new Node(value);
+        nodeToInsert.next = target.next;
+        target.next = nodeToInsert;
     }
 
-    public void removeNodeEnd() {
-        Node n = head;
-        Node secondToLast;
-
-         while (n.next != null) {
-             if (n.next.next == null) {
-                 n.next = null;
-                 break;
-             }
-             n = n.next;
-         }
-    }
-
-//    public void addAtNode(int targetValue, int newValue) {
-//        Node n = head;
-//        Node nodeToAdd = new Node(newValue);
-//        while (n.item != targetValue) {
-//
-//            if (n.next.item == targetValue) {
-//                nodeToAdd.next = n.next.next;
-//                n.next = nodeToAdd;
-//                break;
-//            }
-//            n = n.next;
-//        }
-//    }
-
-    void insertNodeAfter(Node target_node, int newData) {
-
-        //1. Check if target node is null
-        if (target_node == null) {
-            System.out.println("The given previous node cannot be null");
+    void removeNodeSpecified(Node target) {
+        if (target == null) {
+            System.out.println("target node is null");
             return;
         }
 
-        //2. Create node with data
-
-        Node new_node = new Node(newData);
-
-        //3. Link new_node to nodes after the target_node
-
-        new_node.next = target_node.next;
-
-        //4. Link target_node to new_node
-
-        target_node.next = new_node;
-
-        //5. Link new node to the previous node which is the target node
-
-        new_node.previous = target_node;
-
-        //6. I don't understand this part???
-
-        if (new_node.next != null) new_node.next.previous = new_node;
-
-    }
-
-    int listLength() {
-        Node n = head;
-        int i = 0;
-
-        while (n != null) {
-            n = n.next;
-            i++;
+        if (target == head) {
+            System.out.println("target is head, can't perform this operation. Use removeNodeFirst instead");
+            return;
         }
 
-        return i + 1;
+        Node node = head;
+        Node previous = head;
+        while(node.next != null) {
+            if (node == target) {
+                previous.next = previous.next.next;
+                return;
+            }
+            previous = node;
+            node = node.next;
+        }
     }
 
-        public static void main(String[] args) {
 
-            //start with empty list
-            LinkedList linkedList = new LinkedList();
-
-            //create the head of list and a couple other nodes
-            linkedList.head = new Node(1);
-            Node second = new Node(2);
-            Node third = new Node(3);
-
-            //link nodes to the list
-            linkedList.head.next = second;
-            second.next = third;
-
-            // add to beginning of list
-
-            linkedList.appendNodeBeginning(0);
-
-            linkedList.appendNodeBeginning(99);
-
-            // remove from beginning of list
-
-            linkedList.removeNodeBeginning();
-
-            //add to end of list
-
-            linkedList.appendNodeEnd(4);
-
-            linkedList.appendNodeEnd(5);
-
-            //remove from end of list
-
-            linkedList.removeNodeEnd();
-
-            //add node at value
-
-            linkedList.insertNodeAfter(second, 99);
-
-            //add node at index
-
-            linkedList.insertNodeAfter(third, 88);
-
-            //traverse list
-
-            linkedList.printLinkedList();
-
-
+    void insertNodeAfter(Node target, int value) {
+        if (target == null) {
+            System.out.println("target node is null");
+            return;
         }
+
+        Node nodeToInsert = new Node(value);
+
+        nodeToInsert.next = target.next;
+        target.next = nodeToInsert;
+    }
+
+    void removeNodeAfter(Node target) {
+        if (target == null) {
+            System.out.println("target node is null");
+            return;
+        }
+
+        Node node = head;
+        while(node.next != null) {
+            if (node.next == target) {
+                node.next = node.next.next;
+                return;
+            }
+            node = node.next;
+        }
+    }
+
+    public static void main(String[] args) {
+        LinkedList linkedList = new LinkedList();
+        linkedList.head = new Node(1);
+        linkedList.head.next = new Node(2);
+        linkedList.head.next.next = new Node(3);
+        Node hello = linkedList.head.next;
+
+        linkedList.insertNodeAfter(hello, 99);
+        linkedList.removeNodeSpecified(linkedList.head.next.next);
+
+        linkedList.printList();
+    }
+
 }
