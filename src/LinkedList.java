@@ -186,6 +186,20 @@ public class LinkedList {
         return node;
     }
 
+    void reverseList(Node node) {
+        Node prev = null;
+        Node current = head;
+        Node next = null;
+
+        while(current != null) {
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+        head = prev;
+    }
+
     public static void main(String[] args) {
         LinkedList linkedList = new LinkedList();
         linkedList.head = new Node(1);
@@ -201,6 +215,8 @@ public class LinkedList {
         linkedList.printList();
         linkedList.listLength();
         linkedList.findMidPoint();
+        linkedList.reverseList(linkedList.head);
+        linkedList.printList();
     }
 
 }
