@@ -64,12 +64,47 @@ public class DoubleLinkedList {
 
     }
 
-    void insertNodeBefore() {
+    void insertNodeBefore(Node next_node, int data) {
+
+       //check if given node is null
+        if (next_node == null) {
+            System.out.println("Provided node is null");
+            return;
+        }
+
+        //create new node
+        Node new_node = new Node(data);
+        //link new node forward
+        new_node.next = next_node;
+        //link new node backwards
+        new_node.previous = next_node.previous;
+        //link node that comes before the new node forwards
+        next_node.previous.next = new_node;
+        //link next node backwards
+        next_node.previous = new_node;
 
     }
 
-    void insertNodeAfter() {
+    void insertNodeAfter(Node prev_node, int data) {
 
+       //check if given node is null
+        if(prev_node == null) {
+            System.out.println("Provided node is null");
+            return;
+        }
+
+       //create new node
+        Node new_node = new Node(data);
+        //point new node back at provided node
+        new_node.previous = prev_node;
+        //point new node to next node
+        new_node.next = prev_node.next;
+        //point provided node to new node
+        prev_node.next = new_node;
+        //if new_node.next is not null, link its next node back to it
+        if (new_node.next != null) {
+            new_node.next.previous = new_node;
+        }
     }
 
     int listLength() {
