@@ -28,16 +28,36 @@ public class DoubleLinkedList {
         }
     }
 
-    void insertNodeFirst() {
+    void insertNodeFirst(int data) {
+        Node nodeToInsert = new Node(data);
+        nodeToInsert.next = head;
+        nodeToInsert.previous = null;
 
+        if (head != null) {
+            head.previous = nodeToInsert;
+            head = nodeToInsert;
+        }
     }
 
     void removeNodeFirst() {
-
+        head = head.next;
+        head.previous = null;
     }
 
-    void insertNodeLast() {
+    void insertNodeLast(int data) {
 
+       if(head == null) {
+           head = new Node(data);
+           head.previous = null;
+           return;
+       }
+
+        Node node = head;
+        while(node != null) {
+            node = node.next;
+        }
+        node.next = new Node(data);
+        node.next.previous = node;
     }
 
     void removeNodeLast() {

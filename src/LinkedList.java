@@ -141,6 +141,51 @@ public class LinkedList {
         }
     }
 
+    int listLength() {
+        Node node = head;
+        int count = 0;
+        while(node != null) {
+            node = node.next;
+            count++;
+        }
+        System.out.println("The length of the list is " + count);
+        return count;
+    }
+
+    void findMidPoint() {
+        double listLength = listLength();
+        double midPoint = Math.ceil(listLength/2);
+        Node node = head;
+
+        for (int i = 0; i < midPoint - 1; i++) {
+            node = node.next;
+        }
+
+        if (listLength > 1 && listLength % 2 == 0) {
+            System.out.println("The mid point value is between " + node.item + " and " + node.next.item);
+
+        } else {
+            System.out.println("The mid point value is " + node.item);
+            getNthNode((int)midPoint);
+        }
+    }
+
+    Node getNthNode(int n) {
+        Node node = head;
+
+        if (node == null) {
+            System.out.println("node is null");
+            return null;
+        }
+
+        for (int i = 0; i < n - 1; i++) {
+            node = node.next;
+        }
+
+        System.out.println("Node has a value of " + node.item);
+        return node;
+    }
+
     public static void main(String[] args) {
         LinkedList linkedList = new LinkedList();
         linkedList.head = new Node(1);
@@ -150,8 +195,12 @@ public class LinkedList {
 
         linkedList.insertNodeAfter(hello, 99);
         linkedList.removeNodeSpecified(linkedList.head.next.next);
+        linkedList.insertNodeLast(5);
+        linkedList.insertNodeLast(6);
 
         linkedList.printList();
+        linkedList.listLength();
+        linkedList.findMidPoint();
     }
 
 }
