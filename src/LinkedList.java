@@ -7,11 +7,13 @@ public class LinkedList {
     static class Node {
         int item;
         Node next;
+        Node previous;
 
         // inner class constructor
         Node(int item) {
             this.item = item;
             this.next = null;
+            this.previous = null;
         }
 
     }
@@ -33,11 +35,14 @@ public class LinkedList {
 
     public void appendNodeBeginning(int value) {
 
-        //create new node
+        //1. create new node
         Node new_node = new Node(value);
-        //set new node's reference to current head
+        //2. set new node's reference to current head and previous as null
         new_node.next = head;
-        //set new node as the head reference
+        new_node.previous = null;
+        //3. change previous of head node to the new node
+        if (head != null) head.previous = new_node;
+        //4. set new node as the new head reference
         head = new_node;
     }
 
@@ -53,6 +58,7 @@ public class LinkedList {
         //2. If list is empty, make new node the head
 
         if (head == null) {
+            newTail.previous = null;
             head = new Node(value);
             return;
         }
@@ -65,7 +71,10 @@ public class LinkedList {
             last = last.next;
         }
 
+        //4. Change the next of last current node to the new node
         last.next = newTail;
+        //5. Make the current node the previous of the new node
+        newTail.previous = last;
         return;
     }
 
@@ -137,9 +146,17 @@ public class LinkedList {
 
         new_node.next = target_node.next;
 
-        // Link target_node to new_node
+        //4. Link target_node to new_node
 
         target_node.next = new_node;
+
+        //5. Link new node to the previous node which is the target node
+
+        new_node.previous = target_node;
+
+        //6. I don't understand this part???
+
+        if (new_node.next != null) new_node.next.previous = new_node;
 
     }
 
