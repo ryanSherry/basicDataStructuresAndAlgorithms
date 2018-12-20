@@ -61,7 +61,19 @@ public class DoubleLinkedList {
     }
 
     void removeNodeLast() {
+        if (head == null) {
+            System.out.println("The list is empty, nothing to remove");
+            return;
+        }
 
+        Node last = head;
+        while(last.next != null) {
+            last = last.next;
+        }
+
+        last.item = 0;
+        last.previous.next = null;
+        last.previous = null;
     }
 
     void insertNodeBefore(Node next_node, int data) {
@@ -107,6 +119,23 @@ public class DoubleLinkedList {
         }
     }
 
+    void deleteNode(Node head_ref, Node del) {
+        //check if head or node to delete are null
+        if (head_ref == null || del == null) {
+            return;
+        }
+
+        //if node to be deleted is head node
+        if (head == del) {
+            head = del.next;
+        }
+
+        //change next only if node to be deleted is not the last node
+        if (del.next != null) {
+            del.next.previous = del.previous;
+        }
+    }
+
     int listLength() {
         Node n = head;
         int i = 0;
@@ -120,6 +149,12 @@ public class DoubleLinkedList {
     }
 
     public static void main(String[] args) {
-
+        DoubleLinkedList doubleLinkedList = new DoubleLinkedList();
+        doubleLinkedList.head = new Node(1);
+        doubleLinkedList.head.next = new Node(2);
+        doubleLinkedList.head.next.previous = doubleLinkedList.head;
+        doubleLinkedList.printList();
+        doubleLinkedList.removeNodeLast();
+        doubleLinkedList.printList();
     }
 }
